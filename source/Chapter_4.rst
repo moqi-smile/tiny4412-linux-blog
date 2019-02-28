@@ -49,3 +49,22 @@
 将该选项勾选以后，编译出来的可执行文件将不依赖动态库，而是使用静态库。
 
 在这个选项下面还有一个 Cross compiler prefix 需要我们设置，这里是配置交叉编译链前缀的地方。我使用的是友善之臂给的编译链，所以我输入的是 arm-linux-。修改完以后如下图。
+
+.. figure:: ./_static/Chapter_4-Changemenuconfig1.png
+    :align: center
+    :figclass: align-center
+
+接下来退到最顶层菜单
+
+取消以下选项
+
+.. code::
+
+    Linux Module Utilities  --->
+    [*] Simplified modutils
+
+然后将弹出来的所有选项勾选上，选完以后如下图。
+
+.. figure:: ./_static/Chapter_4-Changemenuconfig2.png
+    :align: center
+    :figclass: align-center
