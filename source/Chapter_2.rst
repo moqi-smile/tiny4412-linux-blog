@@ -8,13 +8,7 @@
 一 获取 u-Boot
 -----------------------------------------------------------
 
-可以直接在我的github上获取
-
-.. code::
-
-    git clone https://github.com/moqi-smile/Tiny4412-sources.git
-
-也可以在友善之臂的官方github里获取
+可以在友善之臂的官方github里获取
 
 .. code::
 
