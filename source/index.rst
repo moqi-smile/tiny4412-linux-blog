@@ -12,3 +12,4 @@ Welcome to tiny4412's documentation!
 
    Chapter_1
    Chapter_2
+   Chapter_3
