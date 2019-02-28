@@ -4,7 +4,7 @@
 
 接下来给我们的开发板制作linux内核与文件系统，我们会用友善之臂所使用的 。
 
-.. note::
+.. code::
 
     推荐使用32位的linux系统，因为友善之臂给的交叉编译链与，都是32位的。如果你当前已经是64位的系统也不怕，只需要安装32位的兼容工具就好了。
 
@@ -28,12 +28,24 @@
 
 首先解压busybox并进入到busybox源码目录
 
-.. note::
+.. code::
 
     tar xvf busybox-1.17.2-20101120.tgz && cd busybox-1.17.2/
 
 我们需要先给busybox设置默认配置
 
-.. note::
+.. code::
 
     make defconfig
+
+选择以下选项
+
+.. code::
+
+    Busybox Settings  --->
+        Build Options  --->
+            [ ] Build static binary (no shared libs)
+
+将该选项勾选以后，编译出来的可执行文件将不依赖动态库，而是使用静态库。
+
+在这个选项下面还有一个 Cross compiler prefix 需要我们设置，这里是配置交叉编译链前缀的地方。我使用的是友善之臂给的编译链，所以我输入的是 arm-linux-。修改完以后如下图。
