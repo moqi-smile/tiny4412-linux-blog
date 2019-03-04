@@ -28,19 +28,19 @@
 
 首先解压busybox并进入到busybox源码目录
 
-.. note::
+.. code::
 
 	tar xvf busybox-1.17.2-20101120.tgz && cd busybox-1.17.2/
 
 我们需要先给busybox设置默认配置
 
-.. note::
+.. code::
 
 	make defconfig
 
 接下来进入菜单配置busybox
 
-.. note::
+.. code::
 
 	make menuconfig
 
@@ -60,6 +60,20 @@
 	:align: center
 	:figclass: align-center
 
+接下来修改文件系统的安装路径，退一层，有以下选项
+
+.. code::
+
+    Installation Options  --->
+        (./_install) BusyBox installation prefix
+
+这个选项就是你编译完 BusyBox 以后文件系统的安装路经, 我们将其改为在BusyBox 的上一层文件夹。修改完以后如下图。
+
+.. figure:: ./_static/Chapter_5/Changemenuconfig2.png
+	:align: center
+	:figclass: align-center
+
+~/work/project/filesystem/rootfs_qtopia_qt4/
 接下来退到最顶层菜单
 
 取消以下选项
@@ -67,11 +81,11 @@
 .. code::
 
 	Linux Module Utilities  --->
-	[*] Simplified modutils
+	   [*] Simplified modutils
 
 然后将弹出来的所有选项勾选上，选完以后如下图。
 
-.. figure:: ./_static/Chapter_5/Changemenuconfig2.png
+.. figure:: ./_static/Chapter_5/Changemenuconfig3.png
 	:align: center
 	:figclass: align-center
 
@@ -85,7 +99,7 @@
 
 .. code::
 
-	cd _install
+    cd ../rootfs_qtopia_qt4/
 
 该文件夹存放着我们编译完的文件系统。但这个文件系统还不完全,还需要我们创建其他的文件夹。
 
@@ -103,7 +117,7 @@
 
 .. code::
 
-	cp  -rf ../examples/bootfloppy/etc/ ./
+	cp  -rf ../busybox-1.17.2/examples/bootfloppy/etc/ ./
 
 复制完以后, 我们创建的文件系统就像下图所示
 
