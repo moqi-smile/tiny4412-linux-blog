@@ -8,17 +8,17 @@
 一 获取交叉编译链
 -----------------------------------------------------------
 
-可以直接在我的github上获取
+可以直接在我的github上获取 
 
 .. code::
 
-	git clone https://github.com/moqi-smile/Tiny4412-project.git
+	git clone https://github.com/moqi-smile/Tiny4412-sources.git
 
 我都是将交叉编译链放在 /opt 下, 你们可以将放在其他地方。 如果你们放在了其他地方的话，设置环境变量的时候就需要修改一下路径。
 
 .. code::
 
-	sudo mv Tiny4412-project/crosscompile/arm-linux-gcc-4.5.1/ /opt/
+	sudo mv Tiny4412-sources/arm-linux-gcc-4.5.1/ /opt/
 
 -----------------------------------------------------------
 二 设置环境变量
@@ -43,7 +43,7 @@
 
 如果有输出以下日志, 则证明安装成功
 
-.. figure:: ./_static/CheckToolchain.png
+.. figure:: ./_static/Chapter_1/CheckToolchain.png
 	:align: center
 	:figclass: align-center
 
@@ -64,3 +64,4 @@
 
 	sudo apt-get install lib32ncurses5
 	sudo apt-get install lib32z1
+

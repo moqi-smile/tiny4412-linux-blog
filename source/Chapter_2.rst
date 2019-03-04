@@ -8,7 +8,13 @@
 一 获取 u-Boot
 -----------------------------------------------------------
 
-可以在友善之臂的官方github里获取
+可以直接在我的github上获取
+
+.. code::
+
+    git clone https://github.com/moqi-smile/Tiny4412-sources.git
+
+也可以在友善之臂的官方github里获取
 
 .. code::
 
@@ -27,38 +33,38 @@
 
 接下来我们设置交叉编译链，在顶层目录下的Makefile下搜索 **CROSS_COMPILE** 在160行那里
 
-.. figure:: ./_static/CROSS_COMPILE.png
+.. figure:: ./_static/Chapter_2/CROSS_COMPILE.png
     :align: center
     :figclass: align-center
 
 在后面添加我们要使用的交叉编译链
 
-.. figure:: ./_static/Change-CROSS_COMPILE.png
+.. figure:: ./_static/Chapter_2/Change-CROSS_COMPILE.png
     :align: center
     :figclass: align-center
 
 接下来我们将MMU关闭, 打开 **include/configs/tiny4412.h**, 搜索MMU会看到以下内容
 
-.. figure:: ./_static/MMU.png
+.. figure:: ./_static/Chapter_2/MMU.png
     :align: center
     :figclass: align-center
 
 将 CONFIG_ENABLE_MMU 注释掉
 
-.. figure:: ./_static/disableMMU.png
+.. figure:: ./_static/Chapter_2/disableMMU.png
     :align: center
     :figclass: align-center
 
 u-boot启动的时候会有一个命令行提示符, 如果你们想要更改的话也可以在这个文件夹内更改，搜索 **CONFIG_SYS_PROMPT** 会出现
 
-.. figure:: ./_static/CONFIG_SYS_PROMPT.png
+.. figure:: ./_static/Chapter_2/CONFIG_SYS_PROMPT.png
     :align: center
     :figclass: align-center
 
 你可以将后面的定义改为自己喜欢的，我就将它改为
 
 
-.. figure:: ./_static/Change-CONFIG_SYS_PROMPT.png
+.. figure:: ./_static/Chapter_2/Change-CONFIG_SYS_PROMPT.png
     :align: center
     :figclass: align-center
 
@@ -89,12 +95,12 @@ u-boot启动的时候会有一个命令行提示符, 如果你们想要更改的
 
 如果输出
 
-.. figure:: ./_static/Download.png
+.. figure:: ./_static/Chapter_2/Download.png
     :align: center
     :figclass: align-center
 
 证明你已经下载成功，把内存卡插入到板子上, 会输出以下内容，则已经大功告成。
 
-.. figure:: ./_static/uboot-output.png
+.. figure:: ./_static/Chapter_2/uboot-output.png
     :align: center
     :figclass: align-center
