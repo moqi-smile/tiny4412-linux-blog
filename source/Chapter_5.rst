@@ -3,7 +3,7 @@
 ===========================================================
 
 
-.. figure:: ./_static/Chapter_5/filesystem.png
+.. figure:: _static/Chapter_5/filesystem.png
 	:align: center
 	:figclass: align-center
 
