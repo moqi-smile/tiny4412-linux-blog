@@ -2,7 +2,7 @@
 安装交叉编译链
 ===========================================================
 
-以下操作均在ubuntu164下普通用户权限下操作，如果有更改用户会特别提醒。
+以下操作均在ubuntu1604下普通用户权限下操作，如果有更改用户会特别提醒。
 
 -----------------------------------------------------------
 一 获取交叉编译链
@@ -12,13 +12,13 @@
 
 .. code::
 
-	git clone https://github.com/moqi-smile/Tiny4412-sources.git
+	https://github.com/moqi-smile/Tiny4412-project/tree/master/crosscompile
 
 我都是将交叉编译链放在 /opt 下, 你们可以将放在其他地方。 如果你们放在了其他地方的话，设置环境变量的时候就需要修改一下路径。
 
 .. code::
 
-	sudo mv Tiny4412-sources/arm-linux-gcc-4.5.1/ /opt/
+	sudo mv Tiny4412-project/crosscompile/arm-linux-gcc-4.5.1/ /opt/
 
 -----------------------------------------------------------
 二 设置环境变量
