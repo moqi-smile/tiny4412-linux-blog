@@ -3,7 +3,7 @@
 ===========================================================
 
 
-.. figure:: ./_static/Chapter_1/CheckToolchain.png
+.. figure:: ./_static/Chapter_1/Changemenuconfig1.png
         :align: center
         :figclass: align-center
 
