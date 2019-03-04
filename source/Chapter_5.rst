@@ -3,7 +3,8 @@
 ===========================================================
 
 
-.. figure:: _static/Chapter_5/filesystem.png
-	:align: center
-	:figclass: align-center
+.. figure:: ./_static/Chapter_1/CheckToolchain.png
+        :align: center
+        :figclass: align-center
+
 
