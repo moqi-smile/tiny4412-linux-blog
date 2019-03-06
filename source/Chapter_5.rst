@@ -67,7 +67,7 @@
     Installation Options  --->
         (./_install) BusyBox installation prefix
 
-这个选项就是你编译完 BusyBox 以后文件系统的安装路经, 我们将其改为在BusyBox 的上一层文件夹。修改完以后如下图。
+这个选项就是你编译完 BusyBox 以后文件系统的安装路经，我们将其改为在BusyBox 的上一层文件夹。修改完以后如下图。
 
 .. figure:: ./_static/Chapter_5/Changemenuconfig2.png
 	:align: center
@@ -101,7 +101,7 @@
 
     cd ../rootfs_qtopia_qt4/
 
-该文件夹存放着我们编译完的文件系统。但这个文件系统还不完全,还需要我们创建其他的文件夹。
+该文件夹存放着我们编译完的文件系统。但这个文件系统还不完全，还需要我们创建其他的文件夹。
 
 .. code::
 
@@ -119,8 +119,46 @@
 
 	cp  -rf ../busybox-1.17.2/examples/bootfloppy/etc/ ./
 
-复制完以后, 我们创建的文件系统就像下图所示
+复制完以后，我们创建的文件系统就像下图所示
 
 .. figure:: ./_static/Chapter_5/filesystem.png
 	:align: center
 	:figclass: align-center
+
+接下来我们需要修改一些文件才能是内核正常使用这个文件系统。
+
+首先修改 etc/init.d/下的 rcS 文件，这个文件在开发板上电以后会自动调用。我们在里面加入mdev命令，使其在上电以后帮助我们创建dev下的设备文件。
+
+.. figure:: ./_static/Chapter_5/ChangeRcs.png
+	:align: center
+	:figclass: align-center
+
+rcS里面还有一句 mount -a，该指令会调用etc 下的 fstab文件，挂载里面写好的文件系统
+
+接下来我们修改 etc 下的 fstab，让这个文件会帮我们挂载内核需要文件系统 proc，sysfs与tmpfs。打开以后，如下图所示去修改。
+
+.. figure:: ./_static/Chapter_5/ChangeFstab.png
+	:align: center
+	:figclass: align-center
+
+我们在用户登录的时候会希望先设置好一些环境变量，这个时候就可以修改 etc 下的 profile 文件。我增加了两个环境变量，一个是用户的工作文档路径，一个是命令行提示符
+
+.. figure:: ./_static/Chapter_5/ChangeProfile.png
+	:align: center
+	:figclass: align-center
+
+到这里就修改完毕了。接下来我们将其做成一个镜像文件。
+
+首先，我们需要一个工具 make_ext4fs。我发现用了友善之臂以外的 make_ext4fs 都无法制作出正确的镜像，可能友善之臂做了一些优化。所以暂时先使用友善之臂他们家的。可以在他们的网盘文件里获取，也可以在我的github里获取。
+
+.. code::
+
+	https://github.com/moqi-smile/Tiny4412-project/tree/master/tool
+
+将这个文件移动到我们自己的系统的 usr/local/bin/ 文件夹下，然后进入到我们刚刚制作完的文件系统的上一层目录，输入以下指令
+
+.. code::
+
+	make_ext4fs -s -l 314572800 -a root -L linux rootfs_qtopia_qt4.img rootfs_qtopia_qt4
+
+就会生成一个 rootfs_qtopia_qt4.img 文件，该文件就是我们想要的镜像文件。
