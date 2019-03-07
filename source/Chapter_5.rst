@@ -12,6 +12,53 @@
 一. 编译Linux内核
 -----------------------------------------------------------
 
+***********************************************************
+1. 获取内核源码
+***********************************************************
+
+***********************************************************
+2. 编译内核
+***********************************************************
+
+首先我们需要一个配置文件，在源码目录下有四个文件。对应你要编译的操作系统。
+
+.. figure:: ./_static/Chapter_5/Config.png
+	:align: center
+	:figclass: align-center
+
+我用的是 linux 系统，所以使用的是 tiny4412_linux_defconfig 这个文件，将其复制为 .config。.config是 menuconfig 的配置文件
+
+.. code::
+
+	cp tiny4412_linux_defconfig .config && make all
+
+我编译完以后出现了一个错误
+
+.. figure:: ./_static/Chapter_5/MarkKernelErr.png
+	:align: center
+	:figclass: align-center
+
+因为我用的是 ubuntu1604 系统编译的。只需要将kernel/timeconst.pl 文件的第 373 行的 define删除就可以了
+
+修改前
+
+.. figure:: ./_static/Chapter_5/SourcesTimeconst.png
+	:align: center
+	:figclass: align-center
+
+修改后
+
+.. figure:: ./_static/Chapter_5/ChangeTimeconst.png
+	:align: center
+	:figclass: align-center
+
+修改完以后再重新编译一次就可以通过了，生成以后的内核文件就在 arch/arm/boot/ 下， 文件名为 zImage 。
+
+.. figure:: ./_static/Chapter_5/Zimage.png
+	:align: center
+	:figclass: align-center
+
+
 -----------------------------------------------------------
 二. 制作文件系统
 -----------------------------------------------------------
