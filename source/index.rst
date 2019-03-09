@@ -16,5 +16,6 @@ Welcome to tiny4412's documentation!
    Chapter_4
    Chapter_5
    Chapter_6
+   Chapter_7
 
 
