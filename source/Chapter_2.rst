@@ -1,106 +1,87 @@
 ===========================================================
-编译 U-Boot
+Arm 架构
 ===========================================================
 
-以下操作均在ubuntu164下普通用户权限下操作，如果有更改用户会特别提醒。
-
 -----------------------------------------------------------
-一 获取 u-Boot
+一 架构
 -----------------------------------------------------------
 
-可以直接在我的github上获取
+    冯·诺依曼结构
+        冯·诺依曼结构也称普林斯顿结构，是一种将程序指令存储器和数据存储器合并在一起的存储器结构。程序指令存储地址和数据存储地址指向同一个存储器的不同物理位置，因此程序指令和数据的宽度相同，如英特尔公司的8086中央处理器的程序指令和数据都是16位宽。
 
-.. code::
-
-    git clone https://github.com/moqi-smile/Tiny4412-sources.git
-
-也可以在友善之臂的官方github里获取
-
-.. code::
-
-	https://github.com/friendlyarm/uboot_tiny4412.git
-
+    哈佛结构
+        哈佛结构是一种将程序指令存储和数据存储分开的存储器结构。哈佛结构是一种并行体系结构，它的主要特点是将程序和数据存储在不同的存储空间中，即程序存储器和数据存储器是两个独立的存储器，每个存储器独立编址、独立访问。
 
 -----------------------------------------------------------
-二 配置与修改 u-Boot
+二 组成
 -----------------------------------------------------------
 
-首先进入到u-Boot的文件夹下, 然后将配置一个你要编译的开发板
+    Arm-core    :
 
-.. code::
+    cache       : 高速缓存
 
-	make tiny4412_config
+    TCM         : 紧耦合内存
 
-接下来我们设置交叉编译链，在顶层目录下的Makefile下搜索 **CROSS_COMPILE** 在160行那里
+    CP15        : cache,tcm,指令分支预测等的开关,处理器大小端, MMU的开关
 
-.. figure:: ./_static/Chapter_2/CROSS_COMPILE.png
-    :align: center
-    :figclass: align-center
+    CP14        : 调试
 
-在后面添加我们要使用的交叉编译链
+    Cp10        : NENO
 
-.. figure:: ./_static/Chapter_2/Change-CROSS_COMPILE.png
-    :align: center
-    :figclass: align-center
+    CP11        : VFP
 
-接下来我们将MMU关闭, 打开 **include/configs/tiny4412.h**, 搜索MMU会看到以下内容
-
-.. figure:: ./_static/Chapter_2/MMU.png
-    :align: center
-    :figclass: align-center
-
-将 CONFIG_ENABLE_MMU 注释掉
-
-.. figure:: ./_static/Chapter_2/disableMMU.png
-    :align: center
-    :figclass: align-center
-
-u-boot启动的时候会有一个命令行提示符, 如果你们想要更改的话也可以在这个文件夹内更改，搜索 **CONFIG_SYS_PROMPT** 会出现
-
-.. figure:: ./_static/Chapter_2/CONFIG_SYS_PROMPT.png
-    :align: center
-    :figclass: align-center
-
-你可以将后面的定义改为自己喜欢的，我就将它改为
-
-
-.. figure:: ./_static/Chapter_2/Change-CONFIG_SYS_PROMPT.png
-    :align: center
-    :figclass: align-center
-
-因为我们关闭了MMU, 所以也需要将链接地址更改, 打开文件 board/samsung/tiny4412/config.mk 将里面的
-
-.. code::
-
-	CONFIG_SYS_TEXT_BASE = 0xc3e00000
-
-更改为
-
-.. code::
-
-	CONFIG_SYS_TEXT_BASE = 0x43e00000
-
-到这里修改便已经结束了。只要在顶层目录下输入 **make** 就会开始编译 u-boot.
+    MMU         ：内存管理单元
 
 -----------------------------------------------------------
-三 下载 u-Boot
+三 主要寄存器
 -----------------------------------------------------------
 
-下面我们将已经编译好了的u-boot下载到内存卡，首先插入SD卡。我的sd卡插入以后，便识别为sdd。
-在u-boot顶层目录下有一个文件夹叫 **sd_fuse** ，进入到这个文件夹以后，编译一下。会生成一个叫做tiny4412的文件夹。进入这个文件夹，输入
+    R0-R12  : 普通寄存器
 
-.. code::
+    R13/SP  : 堆栈指针
 
-	sudo ./sd_fusing.sh /dev/sdd
+    R14/LR  : 链接寄存器
 
-如果输出
+    R15/PC  : 程序计数器
 
-.. figure:: ./_static/Chapter_2/Download.png
-    :align: center
-    :figclass: align-center
+    CPSR    : 当期程序状态寄存器
 
-证明你已经下载成功，把内存卡插入到板子上, 会输出以下内容，则已经大功告成。
+    SPSR    : 保存程序状态寄存器
 
-.. figure:: ./_static/Chapter_2/uboot-output.png
-    :align: center
-    :figclass: align-center
+-----------------------------------------------------------
+四 指令集
+-----------------------------------------------------------
+
+    ARM指令   : 每个指令都是32位长度
+
+    thumb指令 : 每个指令都是16位长度
+
+    thumb指令 : 每个指令是16/32位长度
+
+-----------------------------------------------------------
+五 工作模式
+-----------------------------------------------------------
+
+    User/用户模式 : 执行用户程序
+
+    System/系统模式 : 运行特权操作系统任务
+
+    Svc/操作系统保护模式 : 执行boatload与kernel
+
+    Abort 模式 : 处理存储器故障、实现虚拟存储器和存储器保护
+
+    Irq/中断模式 : 处理普通中断
+
+    Fiq/快速中断模式 : 处理快速中断，支持高速数据传送或通道处理
+
+    unde/未定义模式 : 执行到未定义的指令
+
+.. note::
+
+    1. 普通模式 : User
+    #. 特权模式 : System Svc unde Abort Irq Fiq
+    #. 异常模式 : Svc unde Abort Irq Fiq
+
+.. note::
+
+    每一个异常模式都有自己的R13和R14，SPSR
