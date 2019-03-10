@@ -75,5 +75,44 @@
 	:align: center
 	:figclass: align-center
 
+-----------------------------------------------------------
+二. 使用菜单裁剪自己的代码
+-----------------------------------------------------------
+
+在 linux 系统下用 Markfile 开发工程时有一个非常方便的工具 menuconfig (其实我也不知道叫啥)。只需要在工程目录下输入，make menuconfig就会弹出一个菜单。这个菜单可以生成一份宏定义，然后我们的工程可以根据这些宏定义来裁剪我们的代码。
 
 
+首先，我们进入到我们的源码目录下，创建一个文件 叫做 Kconfig
+
+.. code::
+
+    cd linux-3.5/drivers/demo && touch Kconfig
+
+打开 Kconfig 输入以下内容
+
+.. code::
+
+    config  DEMO_ENABLE
+            bool "Enable Demo"
+            default n
+            help
+            Whether to use demo.c or not
+
+DEMO_ENABLE 是该选项的名称。
+bool 是该选项的类型，因为我要用这个定义来选择是否编译demo，所以我选择了布尔型。后面的字符串是对该选项的介绍
+default 是该选项的默认值
+help 是对该选项的帮助选项。
+
+接下来我们要让内核代码知道该Kconfig的存在，我们得更改上层目录的Kconfig。打开 drivers 目录下的 Kconfig，在文件最后输入
+
+.. code::
+
+    source "drivers/demo/Kconfig"
+
+然后退到 linux-3.5文件夹下，输入 make menuconfig 然后选择 **Device Drivers  --->** ，拖到最下面就可以看到我们制作的选项。
+
+.. figure:: ./_static/Chapter_7/DEMO_Enable.png
+	:align: center
+	:figclass: align-center
+
+将该选项选上，退出保存以后，在顶层目录下的.config里会出现一个新的宏定义 CONFIG_DEMO_ENABLE=y。到这里我们的选项就已经做好了。
