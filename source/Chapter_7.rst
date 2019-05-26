@@ -27,6 +27,7 @@
     #include <linux/sched.h>
 
     static __init int Demo_Init(void)
+    // 加了init定义以后该函数会加入到内核的init段
     {
             printk ("Hello Kernel\n");
             printk ("Hello Kernel\n");
